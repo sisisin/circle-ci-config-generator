@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/circle-ci-config-generator/static/js/main.3137faa2.chunk.js",
-    "main.js.map": "/circle-ci-config-generator/static/js/main.3137faa2.chunk.js.map",
+    "main.js": "/circle-ci-config-generator/static/js/main.beb80003.chunk.js",
+    "main.js.map": "/circle-ci-config-generator/static/js/main.beb80003.chunk.js.map",
     "runtime-main.js": "/circle-ci-config-generator/static/js/runtime-main.95e582f7.js",
     "runtime-main.js.map": "/circle-ci-config-generator/static/js/runtime-main.95e582f7.js.map",
     "static/js/2.8403091f.chunk.js": "/circle-ci-config-generator/static/js/2.8403091f.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.95e582f7.js",
     "static/js/2.8403091f.chunk.js",
-    "static/js/main.3137faa2.chunk.js"
+    "static/js/main.beb80003.chunk.js"
   ]
 }
