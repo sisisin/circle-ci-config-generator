@@ -6091,7 +6091,7 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-"react-dom@^16.8.0  || ^17.0.0":
+react-dom@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
   integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
@@ -6109,6 +6109,11 @@ react-is@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
+
+react-json-graph@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-json-graph/-/react-json-graph-2.0.2.tgz#2ff3e0c513e3728a9818a241bd510883f8092a67"
+  integrity sha512-q6xzvbXlXhJXg8ZL4V13xzwujpdfVYObL5UbdThmR5OUIaqkwUtxYJf8v5UoDG8CqGYj+fygA0F7x+hijVpkOg==
 
 react-universal-interface@^0.6.2:
   version "0.6.2"
@@ -6134,7 +6139,7 @@ react-use@^17.1.0:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
-"react@^16.8.0  || ^17.0.0":
+react@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
   integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==

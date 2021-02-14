@@ -1,4 +1,5 @@
 import React from 'react';
+import { ConfigViewer } from './ConfigViewer';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useCopyToClipboard } from 'react-use';
 import YAML from 'yaml';
@@ -59,6 +60,8 @@ export const App: React.FC = () => {
           </div>
         </form>
       </FormProvider>
+      <hr></hr>
+      <ConfigViewer></ConfigViewer>
     </div>
   );
 };
