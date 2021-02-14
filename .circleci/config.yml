@@ -3,10 +3,15 @@ workflows:
   tests:
     jobs:
       - test
-jobs:
-  test:
-    docker:
-      - image: circleci/node:14.15.5
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
+
+commands:
+  setup:
     steps:
       - checkout
       - restore_cache:
@@ -16,8 +21,27 @@ jobs:
             - key-v2-master
             - key-v2-
       - run: yarn install
+jobs:
+  test:
+    docker:
+      - image: circleci/node:14.15.5
+    steps:
+      - checkout
+      - setup
       - save_cache:
           paths:
             - node_modules/
           key: key-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: yarn test
+  deploy:
+    docker:
+      - image: circleci/node:14.15.5
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'fd:81:f7:f7:e7:ff:32:2e:4c:16:90:41:5b:8b:77:19'
+      - setup
+      - run: |
+          git config user.email "azsisisin@gmail.com"
+          git config user.name "sisisin"
+      - run: yarn deploy
