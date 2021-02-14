@@ -1,0 +1,23 @@
+version: 2.1
+workflows:
+  tests:
+    jobs:
+      - test
+jobs:
+  test:
+    docker:
+      - image: circleci/node:14.15.5
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - key-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - key-v2-{{ .Branch }}
+            - key-v2-master
+            - key-v2-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules/
+          key: key-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn test
