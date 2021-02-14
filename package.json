@@ -4,6 +4,7 @@
   "repository": "https://github.com/sisisin/front-playground-template.git",
   "author": "sisisin <azsisisin@gmail.com>",
   "license": "MIT",
+  "homepage": "https://sisisin.github.io/circle-ci-config-generator/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
