@@ -7,7 +7,7 @@ import YAML from 'yaml';
 export const App: React.FC = () => {
   const methods = useForm();
   const { register, handleSubmit, control } = methods;
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control,
     name: 'jobs',
   });
