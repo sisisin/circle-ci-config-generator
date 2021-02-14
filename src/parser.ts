@@ -28,13 +28,13 @@ export function getNext(workflowJobs: CCNode.WorkflowJob[], key: string): string
     .map((job) => job.key);
   return result;
 }
-namespace CCNode {
+declare namespace CCNode {
   export type WorkflowJob = {
     key: string;
     value: CircleCi.Workflow.JobWithConditionBody | null;
   };
 }
-export namespace CircleCi {
+export declare namespace CircleCi {
   export type Config = {
     version: number;
     workflows: Record<string, Workflow>;
