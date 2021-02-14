@@ -24,3 +24,5 @@ describe('getNext', () => {
     expect(result).toStrictEqual(['deploy']);
   });
 });
+
+describe('toJsonGraph', () => {});

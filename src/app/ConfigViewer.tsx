@@ -1,12 +1,26 @@
 import React from 'react';
-import { parse } from './parser';
+import { parse, toJsonGraph } from './parser';
+import Graph from 'react-json-graph';
 
 const config = parse(getSample());
 
 export const ConfigViewer: React.FC = () => {
+  const [json, setJson] = React.useState(toJsonGraph(config, 'test3'));
   return (
     <div>
-      <pre>{JSON.stringify(config, null, '  ')}</pre>
+      <Graph
+        width={1600}
+        height={600}
+        json={json}
+        onChange={(newGraphJSON: any) => {
+          setJson(newGraphJSON);
+        }}
+        scale={1}
+        // minScale={0.5}
+        isVertical
+        shouldNodeFitContent
+      />
+      <pre>{JSON.stringify(json, null, '  ')}</pre>
     </div>
   );
 };
@@ -24,6 +38,39 @@ workflows:
               only: master
           requires:
             - test
+  test2:
+    jobs:
+      - build
+      - acceptance_test_1:
+          requires:
+            - build
+      - acceptance_test_2:
+          requires:
+            - build
+      - acceptance_test_3:
+          requires:
+            - build
+      - acceptance_test_4:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - acceptance_test_1
+            - acceptance_test_2
+            - acceptance_test_3
+            - acceptance_test_4
+  test3:
+    jobs:
+      - acceptance_test_1:
+      - acceptance_test_2:
+      - acceptance_test_3:
+      - acceptance_test_4:
+      - deploy:
+          requires:
+            - acceptance_test_1
+            - acceptance_test_2
+            - acceptance_test_3
+            - acceptance_test_4
 
 commands:
   setup:

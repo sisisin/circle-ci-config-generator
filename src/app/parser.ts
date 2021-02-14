@@ -3,6 +3,46 @@ import YAML from 'yaml';
 export function parse(config: string): CircleCi.Config {
   return YAML.parse(config);
 }
+export function toJsonGraph(config: CircleCi.Config, key: string): JsonGraph {
+  const jobs = getJobs(config, key);
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
+
+  jobs.forEach((job) => {
+    const node: Node = { id: job.key, label: job.key, position: {} };
+    job.value?.requires?.forEach((requireJob) => {
+      const edge: Edge = { source: requireJob, target: job.key };
+      edges.push(edge);
+    });
+    nodes.push(node);
+  });
+
+  const allOfTargets = new Set(edges.map((e) => e.target));
+  const allOfSources = new Map(edges.map((e) => [e.source, e]));
+  const firstNodes = nodes.filter((node) => !allOfTargets.has(node.id));
+
+  let y = 0;
+  firstNodes.forEach((node) => {
+    node.position = { x: 0, y };
+    y += 50;
+  });
+
+  firstNodes.forEach((node) => {
+    const nextId = allOfSources.get(node.id)!.target;
+    const next = nodes.find((node) => node.id === nextId)!;
+    if (next.position.x === undefined) {
+      next.position.x = node.position.x! + 220;
+    }
+    if (next.position.y === undefined) {
+      next.position.y = 0;
+    }
+  });
+
+  return { edges, nodes };
+}
+type JsonGraph = { edges: Edge[]; nodes: Node[] };
+type Edge = { source: string; target: string };
+type Node = { id: string; label: string; position: { x?: number; y?: number } };
 export function getWorkflows(config: CircleCi.Config): [string, CircleCi.Workflow][] {
   return Object.entries(config.workflows);
 }
