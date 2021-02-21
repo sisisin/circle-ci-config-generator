@@ -11,7 +11,7 @@ export function toJsonGraph(config: CircleCi.Config, key: string): JsonGraph {
 
   return graph;
 }
-function setPosition({ edges, nodes }: JsonGraph) {
+function setPosition1({ edges, nodes }: JsonGraph) {
   const allOfTargets = new Set(edges.map((e) => e.target));
   const allOfSources = new Map(edges.map((e) => [e.source, e]));
   const firstNodes = nodes.filter((node) => !allOfTargets.has(node.id));
@@ -36,6 +36,85 @@ function setPosition({ edges, nodes }: JsonGraph) {
   return { edges, nodes };
 }
 
+const xPadding = 220;
+const yPadding = 50;
+function setPosition({ edges, nodes }: JsonGraph) {
+  const coordinates: boolean[][] = [];
+
+  const nodeMap = new Map(nodes.map((n) => [n.id, n]));
+  const edgeGroupedBySource = edges.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.source]: [...(acc[curr.source] ?? []), curr],
+    };
+  }, {} as Record<string, Edge[]>);
+
+  const allOfTargets = new Set(edges.map((e) => e.target));
+  const firstNodes = nodes.filter((node) => !allOfTargets.has(node.id));
+
+  let x = 0;
+  let y = 0;
+  firstNodes.forEach((node) => {
+    node.position.x = node.position.x ?? x * xPadding;
+    node.position.y = node.position.y ?? y * yPadding;
+
+    x++;
+    edgeGroupedBySource[node.id].forEach((edge) => {
+      const nextNode = nodeMap.get(edge.target)!;
+      nextNode.position.x = nextNode.position.x ?? x * xPadding;
+      nextNode.position.y = nextNode.position.y ?? y * yPadding; // 他のy座標を加味して計算するべき
+    });
+  });
+
+  return { edges, nodes };
+}
+function setPosition2({ edges, nodes }: JsonGraph) {
+  const targetIdSets = new Set(edges.map((e) => e.target));
+  const firstNodes = nodes.filter((node) => !targetIdSets.has(node.id));
+
+  const edgeMap = new Map(edges.map((e) => [e.source, e]));
+  const nodeMap = new Map(nodes.map((n) => [n.id, n]));
+  const edgeGroupedBySource = edges.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.source]: [...(acc[curr.source] ?? []), curr],
+    };
+  }, {} as Record<string, Edge[]>);
+
+  let x = 0;
+  let y = 0;
+  firstNodes.forEach((node) => {
+    nextTo(node);
+  });
+
+  function nextTo(node: Node) {
+    const nextNodes = edgeGroupedBySource[node.id].map((edge) => nodeMap.get(edge.target)!);
+
+    if (node.position.x === undefined) {
+      node.position.x = x;
+      x += 220;
+    }
+    if (node.position.y === undefined) {
+      node.position.y = y;
+    }
+
+    nextNodes.forEach((nextNode) => {
+      if (nextNode.position.x === undefined) {
+        nextNode.position.x = x;
+      }
+      if (nextNode.position.y === undefined) {
+        nextNode.position.y = y;
+        y += 50;
+      }
+    });
+
+    const edge = edgeMap.get(node.id);
+    if (edge) {
+      const next = nodes.find((node) => node.id === edge.target)!;
+      nextTo(next);
+    }
+  }
+}
 function makeGraph(jobs: CCNode.WorkflowJob[]) {
   const nodes: Node[] = [];
   const edges: Edge[] = [];

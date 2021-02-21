@@ -8,7 +8,7 @@ const config2 = parse(multiTestAndDeploy());
 const config3 = parse(buildAndTestAndDeploy());
 
 export const ConfigViewer: React.FC = () => {
-  const [json, setJson] = React.useState(toJsonGraph(config3, 'main'));
+  const [json, setJson] = React.useState(toJsonGraph(config2, 'main'));
   return (
     <div>
       <Graph
